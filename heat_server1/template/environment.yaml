@@ -1,7 +1,6 @@
 parameters:
   web_image_name: rhel8
   db_image_name: rhel8
-  heat_sec_group: heat-sec-group
   web_instance_name: heat-web-server1
   db_instance_name: heat-db-server1
   instance_flavor: demo-flavor

@@ -99,9 +99,7 @@ resources:
       user_data:
         str_replace:
           template:
-            {
-              get_file: /home/stack/tiger/heat-web/heat_server1/template/webserver.sh,
-            }
+            { get_file: /home/stack/tiger/heat-web/heat-server1/webserver.sh }
           params:
             $web_private_ip:
               { get_attr: [web_net_port, fixed_ips, 0, ip_address] }
@@ -128,7 +126,7 @@ resources:
     type: OS::Neutron::SecurityGroup
     properties:
       description: Add security group rules for the multi-tier architecture
-      name: { get_param: heat_sec_group }
+      name: heat-web-sec-group
       rules:
         - remote_ip_prefix: 0.0.0.0/0
           protocol: tcp
@@ -138,10 +136,6 @@ resources:
           protocol: tcp
           port_range_min: 80
           port_range_max: 80
-        - remote_ip_prefix: 0.0.0.0/0
-          protocol: tcp
-          port_range_min: 3306
-          port_range_max: 3306
         - remote_ip_prefix: 0.0.0.0/0
           protocol: icmp
 
@@ -158,9 +152,7 @@ resources:
       user_data:
         str_replace:
           template:
-            {
-              get_file: /home/stack/tiger/heat-web/heat_server1/template/dbserver.sh,
-            }
+            { get_file: /home/stack/tiger/heat-web/heat-server1/dbserver.sh }
           params:
             $db_wc_notify: { get_attr: [db_wait_handle, curl_cli] }
 
@@ -170,13 +162,30 @@ resources:
       network: { get_param: private_net }
       fixed_ips:
         - subnet: { get_param: private_subnet }
-      security_groups: [{ get_resource: web_security_group }]
+      security_groups: [{ get_resource: db_security_group }]
 
   db_floating_ip:
     type: OS::Neutron::FloatingIP
     properties:
       floating_network: { get_param: public_net }
       port_id: { get_resource: db_net_port }
+
+  db_security_group:
+    type: OS::Neutron::SecurityGroup
+    properties:
+      description: Add security group rules for the multi-tier architecture
+      name: heat-db-sec-group
+      rules:
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: tcp
+          port_range_min: 22
+          port_range_max: 22
+        - remote_group_id: { get_resource: web_security_group }
+          protocol: tcp
+          port_range_min: 3306
+          port_range_max: 3306
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: icmp
 
   cinder_volume:
     type: OS::Cinder::Volume
