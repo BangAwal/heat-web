@@ -99,7 +99,9 @@ resources:
       user_data:
         str_replace:
           template:
-            { get_file: /home/stack/tiger/heat-web/heat-server1/webserver.sh }
+            {
+              get_file: /home/stack/tiger/heat-web/heat_server1/template/webserver.sh,
+            }
           params:
             $web_private_ip:
               { get_attr: [web_net_port, fixed_ips, 0, ip_address] }
@@ -152,7 +154,9 @@ resources:
       user_data:
         str_replace:
           template:
-            { get_file: /home/stack/tiger/heat-web/heat-server1/dbserver.sh }
+            {
+              get_file: /home/stack/tiger/heat-web/heat_server1/template/dbserver.sh,
+            }
           params:
             $db_wc_notify: { get_attr: [db_wait_handle, curl_cli] }
 
