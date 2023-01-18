@@ -1,0 +1,10 @@
+parameters:
+  web_image_name: rhel8
+  db_image_name: rhel8
+  web_instance_name: heat-web-server1
+  db_instance_name: heat-db-server1
+  instance_flavor: demo-flavor
+  key_name: demo-keypair
+  public_net: public
+  private_net: demo-network
+  private_subnet: demo-subnet
