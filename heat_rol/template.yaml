@@ -98,7 +98,7 @@ resources:
       user_data_format: RAW
       user_data:
         str_replace:
-          template: { get_file: /home/student/heat-web/heat-rol/webserver.sh }
+          template: { get_file: /home/student/heat-web/heat_rol/webserver.sh }
           params:
             $web_private_ip:
               { get_attr: [web_net_port, fixed_ips, 0, ip_address] }
@@ -150,7 +150,7 @@ resources:
       user_data_format: RAW
       user_data:
         str_replace:
-          template: { get_file: /home/student/heat-web/heat-rol/dbserver.sh }
+          template: { get_file: /home/student/heat-web/heat_rol/dbserver.sh }
           params:
             $db_wc_notify: { get_attr: [db_wait_handle, curl_cli] }
 
