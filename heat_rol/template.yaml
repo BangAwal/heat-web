@@ -4,33 +4,33 @@ description: multi-instance stack template
 parameters:
   web_image_name:
     type: string
-    default: rhel8
+    default: rhel8-web
     description: Image used for web server
     constraints:
       - custom_constraint: glance.image
   db_image_name:
     type: string
-    default: rhel8
+    default: rhel8-db
     description: Image used for DB server
     constraints:
       - custom_constraint: glance.image
   web_instance_name:
     type: string
-    default: heat-web-server1
+    default: marketing-web-server1
     description: Name for the web server
   db_instance_name:
     type: string
-    default: heat-db-server1
+    default: marketing-db-server2
     description: Name for the DB server
   key_name:
     type: string
-    default: demo-keypair
+    default: marketing-keypair
     description: SSH key to connect to the servers
     constraints:
       - custom_constraint: nova.keypair
   instance_flavor:
     type: string
-    default: demo-flavor
+    default: default
     description: flavor used by the servers
     constraints:
       - custom_constraint: nova.flavor
@@ -42,13 +42,13 @@ parameters:
       - custom_constraint: neutron.network
   private_net:
     type: string
-    default: demo-network
+    default: marketing-network1
     description: Name of private network into which servers get deployed
     constraints:
       - custom_constraint: neutron.network
   private_subnet:
     type: string
-    default: demo-subnet
+    default: marketing-subnet1
     description: Name of private subnet into which servers get deployed
     constraints:
       - custom_constraint: neutron.subnet
@@ -98,10 +98,7 @@ resources:
       user_data_format: RAW
       user_data:
         str_replace:
-          template:
-            {
-              get_file: /home/stack/tiger/heat-web/heat_server1/template/webserver.sh,
-            }
+          template: { get_file: /home/student/heat-web/webserver.sh }
           params:
             $web_private_ip:
               { get_attr: [web_net_port, fixed_ips, 0, ip_address] }
@@ -128,7 +125,7 @@ resources:
     type: OS::Neutron::SecurityGroup
     properties:
       description: Add security group rules for the multi-tier architecture
-      name: heat-web-sec-group
+      name: finance-web
       rules:
         - remote_ip_prefix: 0.0.0.0/0
           protocol: tcp
@@ -153,10 +150,7 @@ resources:
       user_data_format: RAW
       user_data:
         str_replace:
-          template:
-            {
-              get_file: /home/stack/tiger/heat-web/heat_server1/template/dbserver.sh,
-            }
+          template: { get_file: /home/student/heat-web/dbserver.sh }
           params:
             $db_wc_notify: { get_attr: [db_wait_handle, curl_cli] }
 
@@ -178,7 +172,7 @@ resources:
     type: OS::Neutron::SecurityGroup
     properties:
       description: Add security group rules for the multi-tier architecture
-      name: heat-db-sec-group
+      name: finance-db
       rules:
         - remote_ip_prefix: 0.0.0.0/0
           protocol: tcp
