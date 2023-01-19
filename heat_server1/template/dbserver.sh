@@ -2,7 +2,8 @@
 sudo subscription-manager register --force --username=your-username --password=your-pass
 sudo subscription-manager attach --auto
 sudo yum repolist
-yum install -y ansible firewalld
+sudo subscription-manager repos --enable ansible-2.9-for-rhel-8-x86_64-rpms
+sudo yum install -y ansible firewalld
 mkfs -t xfs /dev/vdb
 export ANSIBLE_LOG_PATH=~/ansible.log
 cd /tmp; git clone https://github.com/BangAwal/heat-web.git
