@@ -29,7 +29,7 @@ cat << EOF > /var/www/html/index.php
         }
     ?>
     <div class="jumbotron">
-        <h1 class="display-4">Simple Demo App</h1>
+        <h1 class="display-4">Heat Demo App</h1>
         <p class="lead">Multi tier App with apache server and mariadb</p>
         <hr class="my-4">
         <p>Add and Retrieve Data from mysql database</p>
