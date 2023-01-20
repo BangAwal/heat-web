@@ -1,10 +1,10 @@
 parameters:
   web_image_name: rhel8
   db_image_name: rhel8
-  web_instance_name: production-web-server1
-  db_instance_name: production-db-server2
-  instance_flavor: default
-  key_name: production-keypair
+  web_instance_name: heat-web1
+  db_instance_name: heat-db1
+  instance_flavor: demo-flavor
+  key_name: demo-keypair
   public_net: provider-datacentre
-  private_net: production-network1
-  private_subnet: production-subnet1
+  private_net: demo-network
+  private_subnet: demo-subnet
