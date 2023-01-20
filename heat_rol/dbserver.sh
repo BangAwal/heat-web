@@ -1,8 +1,4 @@
 #!/bin/bash
-sudo subscription-manager register --force --username=your-username --password=your-pass
-sudo subscription-manager attach --auto
-sudo yum repolist
-#sudo subscription-manager repos --enable ansible-2.9-for-rhel-8-x86_64-rpms
 sudo yum install -y firewalld git mariadb-server python3-PyMySQL
 sudo setsebool -P mysql_connect_any 1
 sudo touch /etc/my.cnf

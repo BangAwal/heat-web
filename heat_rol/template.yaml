@@ -4,33 +4,33 @@ description: multi-instance stack template
 parameters:
   web_image_name:
     type: string
-    default: rhel8-web
+    default: rhel8
     description: Image used for web server
     constraints:
       - custom_constraint: glance.image
   db_image_name:
     type: string
-    default: rhel8-db
+    default: rhel8
     description: Image used for DB server
     constraints:
       - custom_constraint: glance.image
   web_instance_name:
     type: string
-    default: marketing-web-server1
+    default: heat-web1
     description: Name for the web server
   db_instance_name:
     type: string
-    default: marketing-db-server2
+    default: heat-web2
     description: Name for the DB server
   key_name:
     type: string
-    default: marketing-keypair
+    default: demo-keypair
     description: SSH key to connect to the servers
     constraints:
       - custom_constraint: nova.keypair
   instance_flavor:
     type: string
-    default: default
+    default: demo-flavor
     description: flavor used by the servers
     constraints:
       - custom_constraint: nova.flavor
@@ -42,13 +42,13 @@ parameters:
       - custom_constraint: neutron.network
   private_net:
     type: string
-    default: marketing-network1
+    default: demo-network
     description: Name of private network into which servers get deployed
     constraints:
       - custom_constraint: neutron.network
   private_subnet:
     type: string
-    default: marketing-subnet1
+    default: demo-subnet
     description: Name of private subnet into which servers get deployed
     constraints:
       - custom_constraint: neutron.subnet

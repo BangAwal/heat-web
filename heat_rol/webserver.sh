@@ -1,7 +1,4 @@
 #!/bin/bash
-sudo subscription-manager register --force --username=your-username --password=your-pass
-sudo subscription-manager attach --auto
-sudo yum repolist
 yum install -y httpd php mysql php-mysqlnd
 touch /var/www/html/index.php
 cat << EOF > /var/www/html/index.php
